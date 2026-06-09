@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, NavLink, Navigate, Link } from 'react-router-dom'
 import VideoCard from '../components/VideoCard'
+import Icon from '../components/Icon'
 import { videoTopics, videosByTopic } from '../data/site'
 
 const PER_PAGE = 6 // 2열 × 3행
@@ -23,7 +24,7 @@ function TopicTabs({ activeTopic }) {
                   ].join(' ')
                 }
               >
-                <span>{t.icon}</span>
+                <Icon name={t.icon} size="text-base" />
                 <span>{t.label}</span>
               </NavLink>
             </li>
@@ -111,7 +112,7 @@ export default function Videos() {
               <span className="font-semibold text-slate-700 dark:text-slate-200">{topicMeta.label}</span>
             </nav>
             <h1 className="section-title flex items-center gap-3">
-              <span>{topicMeta.icon}</span>
+              <Icon name={topicMeta.icon} size="text-4xl" className="text-brand-800 dark:text-brand-300" />
               {topicMeta.label}
             </h1>
             <p className="mt-1 text-slate-500 dark:text-slate-400">{topicMeta.desc}</p>

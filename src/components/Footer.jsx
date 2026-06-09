@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { company, videoTopics } from '../data/site'
+import Icon from './Icon'
 
 export default function Footer() {
   return (
@@ -44,7 +45,7 @@ export default function Footer() {
                     to={`/videos/${t.key}`}
                     className="text-sm text-slate-400 transition hover:text-white"
                   >
-                    {t.icon} {t.label}
+                    <Icon name={t.icon} size="text-base" /> {t.label}
                   </Link>
                 </li>
               ))}
