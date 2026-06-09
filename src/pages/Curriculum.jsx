@@ -5,7 +5,11 @@ export default function Curriculum() {
   return (
     <div>
       {/* 헤더 */}
-      <section className="bg-brand-950 py-20 text-center">
+      <section className="relative overflow-hidden bg-neutral-900 py-20 text-center">
+        <div className="pointer-events-none absolute inset-0" style={{
+          background: 'radial-gradient(ellipse at 50% 100%, var(--brand-700) 0%, transparent 60%)',
+          opacity: 0.2,
+        }} />
         <div className="mx-auto max-w-2xl px-6">
           <p className="section-label">CURRICULUM</p>
           <h1 className="mb-4 text-4xl font-extrabold text-white md:text-5xl">학습 커리큘럼</h1>

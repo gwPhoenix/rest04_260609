@@ -19,7 +19,11 @@ const history = [
 export default function About() {
   return (
     <div>
-      <section className="bg-brand-950 py-20 text-center">
+      <section className="relative overflow-hidden bg-neutral-900 py-20 text-center">
+        <div className="pointer-events-none absolute inset-0" style={{
+          background: 'radial-gradient(ellipse at 50% 100%, var(--brand-700) 0%, transparent 60%)',
+          opacity: 0.2,
+        }} />
         <div className="mx-auto max-w-2xl px-6">
           <p className="section-label">ABOUT US</p>
           <h1 className="mb-6 text-4xl font-extrabold leading-tight text-white md:text-5xl">
@@ -31,7 +35,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="bg-brand-800 py-10">
+      <section className="bg-zinc-800 py-10">
         <div className="mx-auto grid max-w-container grid-cols-2 gap-6 px-6 text-center md:grid-cols-4 md:px-10 lg:px-20">
           {stats.map(s => (
             <div key={s.label}>
@@ -100,7 +104,7 @@ export default function About() {
         <Placeholder label="팀 / 사무실 이미지" ratio="21/9" rounded />
       </div>
 
-      <section className="bg-brand-950 py-16 text-center">
+      <section className="bg-neutral-900 py-16 text-center">
         <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sky-ai">지금 시작하세요</p>
         <h2 className="mb-6 text-3xl font-extrabold text-white">AI 강의 무료로 보기</h2>
         <Link to="/videos/ai-basics" className="btn-gold px-8 py-3.5">강의 바로가기 →</Link>

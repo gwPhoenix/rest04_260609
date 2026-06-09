@@ -7,8 +7,8 @@ import Placeholder from './Placeholder'
 export default function Footer() {
   return (
     <footer className="relative">
-      {/* 상단 — 로고 + 소개 (rest03 스타일) */}
-      <div className="mx-auto max-w-container px-4 py-20 md:px-10 lg:px-40">
+      {/* 상단 — 화이트 배경 */}
+      <div className="bg-white dark:bg-zinc-900 mx-auto max-w-container px-4 py-20 md:px-10 lg:px-40 max-w-full">
         <div className="flex flex-col items-start gap-8 md:flex-row md:items-center">
           {/* 로고 */}
           <div className="w-48 shrink-0">

@@ -31,7 +31,11 @@ export default function Contact() {
 
   return (
     <div>
-      <section className="bg-brand-950 py-20 text-center">
+      <section className="relative overflow-hidden bg-neutral-900 py-20 text-center">
+        <div className="pointer-events-none absolute inset-0" style={{
+          background: 'radial-gradient(ellipse at 50% 100%, var(--brand-700) 0%, transparent 60%)',
+          opacity: 0.2,
+        }} />
         <div className="mx-auto max-w-xl px-6">
           <p className="section-label">CONTACT</p>
           <h1 className="mb-4 text-4xl font-extrabold text-white md:text-5xl">문의하기</h1>

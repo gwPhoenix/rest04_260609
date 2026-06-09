@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 export default function SimplePage({ title }) {
   return (
     <div>
-      <div className="bg-brand-950 py-16 text-center">
+      <div className="bg-neutral-900 py-16 text-center">
         <div className="mx-auto max-w-container px-4 md:px-10">
           <nav className="mb-4 text-xs text-slate-500" aria-label="breadcrumb">
             <Link to="/" className="hover:text-brand-300">홈</Link>
