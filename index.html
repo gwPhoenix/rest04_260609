@@ -5,22 +5,24 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="AILearn — AI 기초부터 딥러닝까지, 누구나 쉽게 배우는 온라인 영상 교육 플랫폼" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
-    />
-    <!-- 다크모드 FOUC 방지: React 로드 전에 class 적용 -->
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <!-- Material Symbols Rounded (구글 아이콘) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
+    <!-- 다크모드 + 팔레트 FOUC 방지 -->
     <script>
       (function () {
         var t = localStorage.getItem('theme');
         if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           document.documentElement.classList.add('dark');
         }
+        var p = localStorage.getItem('palette') || '1';
+        document.documentElement.classList.add('palette-' + p);
       })();
     </script>
     <title>AILearn — AI 온라인 교육 플랫폼</title>
-    <script type="module" crossorigin src="/rest04_260609/assets/index-BqDkUrAp.js"></script>
-    <link rel="stylesheet" crossorigin href="/rest04_260609/assets/index-DGQo0aCO.css">
+    <script type="module" crossorigin src="/rest04_260609/assets/index-nUjBSF5B.js"></script>
+    <link rel="stylesheet" crossorigin href="/rest04_260609/assets/index-Bxlx72nC.css">
   </head>
   <body>
     <div id="root"></div>
