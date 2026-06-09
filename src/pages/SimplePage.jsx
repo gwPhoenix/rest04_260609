@@ -1,34 +1,30 @@
-import Placeholder from '../components/Placeholder'
+import { Link } from 'react-router-dom'
 
-// 아직 콘텐츠가 정해지지 않은 단순 페이지용 공통 템플릿
 export default function SimplePage({ title }) {
   return (
     <div>
-      {/* 페이지 타이틀 영역 */}
-      <div className="bg-white">
-        <div className="mx-auto max-w-container px-4 pb-10 pt-12 md:px-10 lg:px-20">
-          <div className="flex flex-col-reverse justify-between md:flex-row">
-            <h2 className="mb-6 text-4xl font-bold leading-none text-stone-500 md:mb-0 md:text-5xl">
-              {title}
-            </h2>
-            <p className="mb-4 text-sm font-medium text-zinc-500 md:mb-0">
-              홈<span className="ml-3 border-l border-zinc-300 pl-3">{title}</span>
-            </p>
-          </div>
+      <div className="bg-brand-950 py-16 text-center">
+        <div className="mx-auto max-w-container px-4 md:px-10">
+          <nav className="mb-4 text-xs text-slate-500" aria-label="breadcrumb">
+            <Link to="/" className="hover:text-brand-300">홈</Link>
+            <span className="mx-2">›</span>
+            <span className="text-slate-300">{title}</span>
+          </nav>
+          <h1 className="text-3xl font-extrabold text-white md:text-4xl">{title}</h1>
         </div>
       </div>
 
-      <Placeholder label={`PAGE HEAD — ${title}`} ratio="32/9" />
-
       <div className="mx-auto max-w-container px-4 py-24 text-center md:px-10 lg:px-40">
-        <p className="text-xl font-medium text-neutral-600">
-          “{title}” 페이지 콘텐츠가 들어갈 영역입니다.
+        <p className="text-xl font-semibold text-slate-500 dark:text-slate-400">
+          "{title}" 페이지 콘텐츠가 들어갈 영역입니다.
         </p>
-        <p className="mt-3 text-neutral-400">
-          템플릿에 포함된 구조를 기반으로 실제 내용을 추가하세요.
+        <p className="mt-3 text-slate-400 dark:text-slate-500">
+          실제 내용으로 교체하세요.
         </p>
-        <div className="mx-auto mt-12 max-w-4xl">
-          <Placeholder label={`${title} CONTENT`} ratio="21/9" rounded />
+        <div className="mt-10">
+          <Link to="/" className="btn-primary">
+            홈으로 돌아가기
+          </Link>
         </div>
       </div>
     </div>

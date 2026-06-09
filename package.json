@@ -1,9 +1,9 @@
 {
-  "name": "rest03",
+  "name": "rest04-ailearn",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "회사 사이트 템플릿 (건설사) - React + Vite + Tailwind",
+  "description": "AI 온라인 교육 플랫폼 — React + Vite + Tailwind",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -17,6 +17,7 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.20",
+    "playwright": "^1.60.0",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13",
     "vite": "^5.4.8"

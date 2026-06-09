@@ -1,100 +1,147 @@
-import { useParams, Navigate } from 'react-router-dom'
-import SubPageLayout from '../components/SubPageLayout'
+import { Link } from 'react-router-dom'
+import { company, stats } from '../data/site'
 import Placeholder from '../components/Placeholder'
 
-const tabs = [
-  { label: 'CEO 인사말', to: '/about/greetings' },
-  { label: '비전/가치', to: '/about/vision' },
-  { label: '연혁', to: '/about/history' },
-  { label: '브랜드소개', to: '/about/brand' },
+const values = [
+  {
+    icon: '🎯',
+    title: '접근성',
+    desc: '복잡한 AI 개념을 누구나 이해할 수 있는 언어로 풀어냅니다.',
+  },
+  {
+    icon: '🔬',
+    title: '전문성',
+    desc: '현장 경험을 갖춘 전문가들이 엄선하고 제작한 콘텐츠를 제공합니다.',
+  },
+  {
+    icon: '🌱',
+    title: '지속 성장',
+    desc: '최신 AI 트렌드에 맞춰 지속적으로 콘텐츠를 업데이트합니다.',
+  },
+  {
+    icon: '🤝',
+    title: '공공 기여',
+    desc: 'AI 교육의 민주화를 위해 핵심 콘텐츠를 무료로 공개합니다.',
+  },
 ]
 
-const pages = {
-  greetings: { headLabel: 'Greetings', en: 'CEO Message', title: 'CEO 인사말' },
-  vision: { headLabel: 'Vision', en: 'Vision & Value', title: '비전/가치' },
-  history: { headLabel: 'History', en: 'History', title: '연혁' },
-  brand: { headLabel: 'Brand', en: 'Brand', title: '브랜드소개' },
-}
-
-// 연혁 데모 데이터
 const history = [
-  { year: '2026', events: ['홈페이지 리뉴얼 오픈', 'ISO 9001 인증 갱신'] },
-  { year: '2020', events: ['해외사업 본격 진출', '플랜트사업부 신설'] },
-  { year: '2010', events: ['충남도청신도시 지하차도 건설 수주'] },
-  { year: '1998', events: ['ISO 9001 품질경영시스템 최초 인증'] },
+  { year: '2026', events: ['AILearn 플랫폼 론칭', 'AI 기초·리터러시 강의 공개'] },
+  { year: '2025', events: ['AI 교육 콘텐츠 기획·제작 시작', '유튜브 채널 개설'] },
+  { year: '2024', events: ['AI 교육 연구 팀 구성', '커리큘럼 설계 시작'] },
 ]
-
-function Greetings() {
-  return (
-    <div className="flex flex-col gap-12 md:flex-row md:gap-16">
-      <div className="w-full md:w-2/5">
-        <Placeholder label="CEO PHOTO" ratio="4/5" rounded />
-      </div>
-      <div className="flex-1">
-        <p className="mb-8 text-3xl font-bold leading-snug text-brand md:text-4xl">
-          신뢰와 기술로
-          <br />
-          내일의 가치를 짓습니다.
-        </p>
-        <div className="space-y-5 text-lg font-medium leading-8 text-neutral-700">
-          <p>
-            안녕하십니까. 진흥기업 홈페이지를 찾아주신 여러분께 진심으로 감사드립니다.
-            저희는 반세기가 넘는 시간 동안 주택, 건축, 토목, 플랜트 전 영역에서 축적한 기술력과
-            노하우로 고객의 신뢰에 보답해 왔습니다.
-          </p>
-          <p>
-            앞으로도 사람이 머무는 공간과 그 공간을 둘러싼 환경까지 함께 설계하며, 도시와 자연이
-            균형을 이루는 지속 가능한 미래를 만들어가겠습니다. 변함없는 관심과 성원을 부탁드립니다.
-          </p>
-          <p className="pt-4 font-bold text-neutral-900">진흥기업 대표이사</p>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function History() {
-  return (
-    <div className="flex flex-col gap-10">
-      {history.map((h) => (
-        <div
-          key={h.year}
-          className="flex flex-col gap-4 border-b border-neutral-200 pb-8 md:flex-row md:gap-16"
-        >
-          <p className="text-4xl font-bold text-brand md:w-40">{h.year}</p>
-          <ul className="flex flex-1 flex-col gap-2 text-lg font-medium text-neutral-700">
-            {h.events.map((e, i) => (
-              <li key={i}>· {e}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
-  )
-}
 
 export default function About() {
-  const { tab } = useParams()
-  const meta = pages[tab]
-  if (!meta) return <Navigate to="/about/greetings" replace />
-
   return (
-    <SubPageLayout sectionTitle="회사소개" headLabel={meta.headLabel} tabs={tabs}>
-      <div className="mx-auto max-w-container px-4 md:px-10 lg:px-40">
-        <p className="mb-16 text-5xl font-semibold leading-none text-brand md:text-7xl">
-          {meta.en}
-        </p>
-        {tab === 'greetings' && <Greetings />}
-        {tab === 'history' && <History />}
-        {(tab === 'vision' || tab === 'brand') && (
-          <>
-            <p className="mb-10 text-lg font-medium leading-8 text-neutral-700">
-              {meta.title} 콘텐츠가 들어갈 영역입니다. 실제 운영 시 내용으로 교체하세요.
-            </p>
-            <Placeholder label={`${meta.title} CONTENT`} ratio="21/9" rounded />
-          </>
-        )}
+    <div>
+      {/* 히어로 */}
+      <section className="bg-brand-950 py-20 text-center">
+        <div className="mx-auto max-w-2xl px-6">
+          <p className="section-label">ABOUT US</p>
+          <h1 className="mb-6 text-4xl font-extrabold leading-tight text-white md:text-5xl">
+            AI 교육의 문턱을
+            <br />
+            낮추는 플랫폼
+          </h1>
+          <p className="text-lg leading-8 text-slate-300">
+            {company.description[0]}
+            <br />
+            {company.description[1]}
+          </p>
+        </div>
+      </section>
+
+      {/* 통계 */}
+      <section className="bg-brand-800 py-10">
+        <div className="mx-auto grid max-w-container grid-cols-2 gap-6 px-6 text-center md:grid-cols-4 md:px-10 lg:px-20">
+          {stats.map(s => (
+            <div key={s.label}>
+              <p className="text-3xl font-extrabold text-white md:text-4xl">{s.value}</p>
+              <p className="mt-1 text-sm font-semibold text-brand-200">{s.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 미션/비전 */}
+      <section className="py-20 md:py-28">
+        <div className="mx-auto max-w-container px-6 md:px-10 lg:px-20">
+          <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
+            <div>
+              <p className="section-label">MISSION</p>
+              <h2 className="section-title mb-6">우리의 미션</h2>
+              <p className="text-lg leading-8 text-slate-600 dark:text-slate-300">
+                AI 기술의 혜택이 소수가 아닌 모든 사람에게 돌아갈 수 있도록,
+                고품질 AI 교육 콘텐츠를 쉽고 무료로 제공합니다.
+              </p>
+            </div>
+            <div>
+              <p className="section-label">VISION</p>
+              <h2 className="section-title mb-6">우리의 비전</h2>
+              <p className="text-lg leading-8 text-slate-600 dark:text-slate-300">
+                2030년까지 10만 명의 AI 리터러시 향상을 이끌고,
+                대한민국 AI 교육의 표준이 되는 플랫폼을 만듭니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 핵심 가치 */}
+      <section className="bg-slate-50 py-20 dark:bg-dark-surface">
+        <div className="mx-auto max-w-container px-6 md:px-10 lg:px-20">
+          <p className="section-label">CORE VALUES</p>
+          <h2 className="section-title mb-12">AILearn이 추구하는 가치</h2>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {values.map(v => (
+              <div key={v.title} className="card p-6">
+                <div className="mb-4 text-4xl">{v.icon}</div>
+                <h3 className="mb-2 font-extrabold text-slate-900 dark:text-white">{v.title}</h3>
+                <p className="text-sm leading-7 text-slate-500 dark:text-slate-400">{v.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 연혁 */}
+      <section className="py-20 md:py-28">
+        <div className="mx-auto max-w-container px-6 md:px-10 lg:px-20">
+          <p className="section-label">HISTORY</p>
+          <h2 className="section-title mb-12">걸어온 길</h2>
+          <div className="flex flex-col gap-8">
+            {history.map(h => (
+              <div
+                key={h.year}
+                className="flex flex-col gap-4 border-b border-slate-100 pb-8 md:flex-row md:gap-16 dark:border-dark-border"
+              >
+                <p className="text-4xl font-extrabold text-brand-800 dark:text-brand-300 md:w-32">
+                  {h.year}
+                </p>
+                <ul className="flex flex-1 flex-col gap-2 text-base font-medium text-slate-600 dark:text-slate-300">
+                  {h.events.map((e, i) => (
+                    <li key={i}>· {e}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 이미지 배너 자리 */}
+      <div className="mx-auto max-w-container px-6 pb-16 md:px-10 lg:px-20">
+        <Placeholder label="팀 / 사무실 이미지" ratio="21/9" rounded />
       </div>
-    </SubPageLayout>
+
+      {/* CTA */}
+      <section className="bg-brand-950 py-16 text-center">
+        <p className="mb-2 text-brand-300 font-semibold">지금 시작하세요</p>
+        <h2 className="mb-6 text-3xl font-extrabold text-white">AI 강의 무료로 보기</h2>
+        <Link to="/videos/ai-basics" className="btn-gold px-8 py-3.5">
+          강의 바로가기 →
+        </Link>
+      </section>
+    </div>
   )
 }

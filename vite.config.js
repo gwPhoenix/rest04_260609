@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// GitHub Pages 배포 시 base 경로를 리포명으로 설정 (aebonlee.github.io/rest03/)
 export default defineConfig({
   plugins: [react()],
-  base: '/rest03/',
+  // 로컬 개발은 '/', GitHub Pages 배포 시에만 저장소명 경로 적용
+  base: process.env.NODE_ENV === 'production' ? '/rest04_260609/' : '/',
 })
