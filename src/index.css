@@ -4,18 +4,17 @@
 
 /* ════════════════════════════════════════════════════════
    5가지 컬러 팔레트 — CSS 변수 정의
-   html.palette-N 클래스로 전환됩니다.
+   ────────────────────────────────────────────────────────
+   브랜드 색상(--brand-*, --sky-ai, --gold-ai)만 팔레트별 변경
+   다크모드 배경(--dark-*)은 모든 팔레트에서 중립 zinc 동일 적용
    ════════════════════════════════════════════════════════ */
 
-/* 기본 폴백 (palette-1 과 동일) */
+/* ── 중립 다크모드 배경 (팔레트 공통) ── */
 :root {
-  --brand-50: #EEF4FF; --brand-100: #DBE8FF; --brand-200: #BFCFFE;
-  --brand-300: #93AFFD; --brand-400: #6089FA; --brand-500: #3B6CF6;
-  --brand-600: #2952E8; --brand-700: #1F3FD4; --brand-800: #1E3A8A;
-  --brand-900: #1A2E6A; --brand-950: #0A1628;
-  --sky-ai: #0EA5E9; --gold-ai: #F59E0B;
-  --dark-bg: #080E1E; --dark-surface: #0D1B36;
-  --dark-card: #112040; --dark-border: #1E3A6A;
+  --dark-bg:      #09090b;  /* zinc-950 — 항상 중립 */
+  --dark-surface: #18181b;  /* zinc-900 */
+  --dark-card:    #27272a;  /* zinc-800 */
+  --dark-border:  #3f3f46;  /* zinc-700 */
 }
 
 /* ── 팔레트 1: Ocean Blue ── */
@@ -25,8 +24,6 @@ html.palette-1 {
   --brand-600: #2952E8; --brand-700: #1F3FD4; --brand-800: #1E3A8A;
   --brand-900: #1A2E6A; --brand-950: #0A1628;
   --sky-ai: #0EA5E9; --gold-ai: #F59E0B;
-  --dark-bg: #080E1E; --dark-surface: #0D1B36;
-  --dark-card: #112040; --dark-border: #1E3A6A;
 }
 
 /* ── 팔레트 2: Emerald Teal ── */
@@ -36,8 +33,6 @@ html.palette-2 {
   --brand-600: #0d9488; --brand-700: #0f766e; --brand-800: #115e59;
   --brand-900: #134e4a; --brand-950: #042f2e;
   --sky-ai: #06b6d4; --gold-ai: #f97316;
-  --dark-bg: #021916; --dark-surface: #042f2e;
-  --dark-card: #063b38; --dark-border: #0f766e;
 }
 
 /* ── 팔레트 3: Royal Purple ── */
@@ -47,8 +42,6 @@ html.palette-3 {
   --brand-600: #7c3aed; --brand-700: #6d28d9; --brand-800: #5b21b6;
   --brand-900: #4c1d95; --brand-950: #2e1065;
   --sky-ai: #c084fc; --gold-ai: #f59e0b;
-  --dark-bg: #0f0a1e; --dark-surface: #1e1345;
-  --dark-card: #2a1860; --dark-border: #4c1d95;
 }
 
 /* ── 팔레트 4: Forest Green ── */
@@ -58,8 +51,6 @@ html.palette-4 {
   --brand-600: #16a34a; --brand-700: #15803d; --brand-800: #166534;
   --brand-900: #14532d; --brand-950: #052e16;
   --sky-ai: #34d399; --gold-ai: #eab308;
-  --dark-bg: #011a0c; --dark-surface: #052e16;
-  --dark-card: #063d1c; --dark-border: #166534;
 }
 
 /* ── 팔레트 5: Rose Red ── */
@@ -69,12 +60,30 @@ html.palette-5 {
   --brand-600: #e11d48; --brand-700: #be123c; --brand-800: #9f1239;
   --brand-900: #881337; --brand-950: #4c0519;
   --sky-ai: #fb923c; --gold-ai: #fbbf24;
-  --dark-bg: #1a0008; --dark-surface: #2d0515;
-  --dark-card: #3d0820; --dark-border: #9f1239;
+}
+
+/* ── 다크모드 배경 팔레트 오버라이드 차단 — 항상 중립 zinc 유지 ── */
+/* html.palette-N (0,1,1) 와 동일 명시도, 뒤에 선언되므로 항상 우선 */
+html.palette-1, html.palette-2, html.palette-3, html.palette-4, html.palette-5 {
+  --dark-bg:      #09090b;
+  --dark-surface: #18181b;
+  --dark-card:    #27272a;
+  --dark-border:  #3f3f46;
 }
 
 /* ════════════════════════════════════════════════════════
-   Material Symbols 아이콘 설정
+   brand-50 폴백 — palette 클래스 없을 때 기본값 (palette-1 동일)
+   ════════════════════════════════════════════════════════ */
+:root {
+  --brand-50: #EEF4FF; --brand-100: #DBE8FF; --brand-200: #BFCFFE;
+  --brand-300: #93AFFD; --brand-400: #6089FA; --brand-500: #3B6CF6;
+  --brand-600: #2952E8; --brand-700: #1F3FD4; --brand-800: #1E3A8A;
+  --brand-900: #1A2E6A; --brand-950: #0A1628;
+  --sky-ai: #0EA5E9; --gold-ai: #F59E0B;
+}
+
+/* ════════════════════════════════════════════════════════
+   Material Symbols 아이콘
    ════════════════════════════════════════════════════════ */
 .material-symbols-rounded {
   font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -90,13 +99,21 @@ html.palette-5 {
 @layer base {
   html { scroll-behavior: smooth; }
   body {
-    @apply font-sans antialiased bg-white text-slate-900 dark:bg-dark dark:text-slate-100;
+    @apply font-sans antialiased;
+    /* 라이트: 흰색 배경 / 다크: 중립 아주 어두운 배경 */
+    background-color: #ffffff;
+    color: #0f172a;
     transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .dark body {
+    background-color: var(--dark-bg);
+    color: #f1f5f9;
   }
 }
 
 @layer components {
-  .section-x { @apply px-4 md:px-10 lg:px-20 xl:px-32; }
+  .section-x  { @apply px-4 md:px-10 lg:px-20 xl:px-32; }
+
   .btn-primary {
     @apply inline-flex items-center gap-2 rounded-lg bg-brand-800 px-6 py-3 font-bold text-white transition hover:bg-brand-700 active:scale-95;
   }
@@ -104,17 +121,17 @@ html.palette-5 {
     @apply inline-flex items-center gap-2 rounded-lg bg-gold-ai px-6 py-3 font-bold text-white transition hover:brightness-105 active:scale-95;
   }
   .btn-outline {
-    @apply inline-flex items-center gap-2 rounded-lg border-2 border-brand-800 px-6 py-3 font-bold text-brand-800 transition hover:bg-brand-50 dark:border-brand-400 dark:text-brand-300 dark:hover:bg-brand-900;
+    @apply inline-flex items-center gap-2 rounded-lg border-2 border-brand-800 px-6 py-3 font-bold text-brand-800 transition hover:bg-brand-50 dark:border-brand-400 dark:text-brand-300 dark:hover:bg-zinc-800;
   }
   .card {
-    @apply rounded-2xl border border-slate-100 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-dark-border dark:bg-dark-card dark:hover:border-brand-700;
+    @apply rounded-2xl border border-slate-100 bg-white shadow-sm transition-shadow hover:shadow-md dark:border-zinc-700 dark:bg-zinc-800 dark:hover:border-brand-700;
   }
-  .section-title { @apply text-3xl font-extrabold text-brand-950 dark:text-white md:text-4xl; }
+  .section-title { @apply text-3xl font-extrabold text-brand-800 dark:text-brand-300 md:text-4xl; }
   .section-label { @apply mb-3 text-sm font-bold uppercase tracking-widest text-sky-ai; }
 }
 
 /* 난이도 배지 */
 .badge-입문 { @apply bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400; }
-.badge-초급 { @apply bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400; }
-.badge-중급 { @apply bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400; }
-.badge-고급 { @apply bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400; }
+.badge-초급 { @apply bg-blue-100   text-blue-700   dark:bg-blue-900/30   dark:text-blue-400; }
+.badge-중급 { @apply bg-amber-100  text-amber-700  dark:bg-amber-900/30  dark:text-amber-400; }
+.badge-고급 { @apply bg-red-100    text-red-700    dark:bg-red-900/30    dark:text-red-400; }
