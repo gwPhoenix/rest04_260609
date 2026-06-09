@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom'
 import { company, stats } from '../data/site'
-import Placeholder from '../components/Placeholder'
 import Icon from '../components/Icon'
 
 const values = [
@@ -99,10 +98,6 @@ export default function About() {
           </div>
         </div>
       </section>
-
-      <div className="mx-auto max-w-container px-6 pb-16 md:px-10 lg:px-20">
-        <Placeholder label="팀 / 사무실 이미지" ratio="21/9" rounded />
-      </div>
 
       <section className="bg-neutral-900 py-16 text-center">
         <p className="mb-2 text-sm font-bold uppercase tracking-widest text-sky-ai">지금 시작하세요</p>
