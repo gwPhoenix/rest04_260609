@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
+import ParticleCanvas from '../components/ParticleCanvas'
 import { videoTopics, allVideos } from '../data/site'
 
 // ─── 슬라이드 데이터 ─────────────────────────────────────────
@@ -31,25 +32,48 @@ function HeroBg({ slide, bg }) {
 // ─── 히어로 슬라이더 ──────────────────────────────────────────
 function Hero() {
   const [idx, setIdx] = useState(0)
+  const mouseRef = useRef({ x: -9999, y: -9999 })
+
   useEffect(() => {
     const t = setInterval(() => setIdx(i => (i + 1) % slides.length), 5000)
     return () => clearInterval(t)
   }, [])
   const go = dir => setIdx(i => (i + dir + slides.length) % slides.length)
 
+  const handleMouseMove = useCallback(e => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top }
+  }, [])
+  const handleMouseLeave = useCallback(() => {
+    mouseRef.current = { x: -9999, y: -9999 }
+  }, [])
+
   return (
-    <section className="relative h-[calc(100vh-5rem)] min-h-[520px] w-full overflow-hidden">
+    <section
+      className="relative h-[calc(100vh-5rem)] min-h-[520px] w-full overflow-hidden"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
       {slides.map((s, i) => (
         <div key={i} className={[
           'absolute inset-0 transition-opacity duration-1000',
           i === idx ? 'opacity-100' : 'pointer-events-none opacity-0',
         ].join(' ')}>
           <HeroBg slide={s} bg={s.bg ?? null} />
-          <div className="absolute inset-0 flex items-end">
-            <p className="relative z-10 whitespace-pre-line px-[5%] pb-32 text-5xl font-medium leading-tight text-white drop-shadow md:text-7xl lg:text-8xl xl:text-[8rem]">
-              {s.copy}
-            </p>
-          </div>
+        </div>
+      ))}
+
+      {/* 파티클 신경망 애니메이션 — 배경 위, 텍스트 아래 */}
+      <ParticleCanvas mouseRef={mouseRef} />
+
+      {slides.map((s, i) => (
+        <div key={`txt-${i}`} className={[
+          'absolute inset-0 flex items-end transition-opacity duration-1000',
+          i === idx ? 'opacity-100' : 'pointer-events-none opacity-0',
+        ].join(' ')}>
+          <p className="relative z-10 whitespace-pre-line px-[5%] pb-32 text-5xl font-medium leading-tight text-white drop-shadow md:text-7xl lg:text-8xl xl:text-[8rem]">
+            {s.copy}
+          </p>
         </div>
       ))}
 
