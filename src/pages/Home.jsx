@@ -114,24 +114,24 @@ function OurVideos() {
           AI 강의 영상<br />주제별로 배우세요
         </h2>
       </div>
-      <div className="flex gap-6 overflow-x-auto px-4 pb-4 md:px-10 lg:px-40">
+      {/* 3×2 그리드 — 가로 스크롤 없음 */}
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
         {videoTopics.map(t => (
           <Link key={t.key} to={`/videos/${t.key}`}
-            className="group relative h-[366px] w-64 shrink-0 overflow-hidden rounded-xl bg-neutral-900">
+            className="group relative h-56 overflow-hidden rounded-xl bg-neutral-900 md:h-64">
             <div className="absolute inset-0 flex items-center justify-center">
-              <Icon name={t.icon} size="text-[8rem]" className="text-neutral-700" />
+              <Icon name={t.icon} size="text-[6rem]" className="text-neutral-700" />
             </div>
-            {/* 팔레트 컬러 글로우 — 카드 안에서 브랜드 색 힌트 */}
             <div className="absolute inset-0" style={{
               background: 'radial-gradient(ellipse at 50% 80%, var(--brand-700) 0%, transparent 60%)',
               opacity: 0.18,
             }} />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
-              <Icon name={t.icon} size="text-2xl" className="mb-3 text-brand-300" />
-              <p className="mb-3 text-2xl font-bold">{t.label}</p>
+            <div className="absolute inset-0 flex flex-col justify-end p-5 text-white">
+              <Icon name={t.icon} size="text-xl" className="mb-2 text-brand-300" />
+              <p className="mb-1 text-lg font-bold md:text-xl">{t.label}</p>
               <p className="text-xs font-semibold text-brand-300">{t.count}개 강의</p>
-              <p className="mt-2 text-sm leading-6 text-white/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <p className="mt-1.5 text-xs leading-5 text-white/60 line-clamp-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 {t.desc}
               </p>
             </div>
