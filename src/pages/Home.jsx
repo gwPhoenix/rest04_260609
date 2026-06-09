@@ -1,15 +1,43 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Placeholder from '../components/Placeholder'
 import Icon from '../components/Icon'
 import VideoCard from '../components/VideoCard'
 import { videoTopics, featuredVideos, allVideos } from '../data/site'
 
 // ── 히어로 슬라이더 (rest03 스타일) ─────────────────────────
 const slides = [
-  { label: 'HERO 01', copy: 'AI를 배우고,\n미래를 만들다' },
-  { label: 'HERO 02', copy: '누구나 쉽게,\n인공지능의 세계로' },
+  {
+    copy: 'AI를 배우고,\n미래를 만들다',
+    // 실제 배경 이미지 URL로 교체하세요 (예: '/images/hero1.jpg')
+    bg: null,
+    accent: '70% 50%',
+  },
+  {
+    copy: '누구나 쉽게,\n인공지능의 세계로',
+    bg: null,
+    accent: '30% 60%',
+  },
 ]
+
+// 이미지가 없을 때 보여줄 그라디언트 배경
+function HeroBg({ slide }) {
+  return (
+    <div className="absolute inset-0 bg-brand-950">
+      {/* 방사형 광원 */}
+      <div className="absolute inset-0" style={{
+        background: `radial-gradient(ellipse at ${slide.accent}, var(--brand-800) 0%, transparent 55%)`,
+        opacity: 0.5,
+      }} />
+      {/* 격자 패턴 */}
+      <div className="absolute inset-0" style={{
+        backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
+        backgroundSize: '80px 80px',
+      }} />
+      {/* 하단 페이드 */}
+      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-brand-950 to-transparent" />
+    </div>
+  )
+}
 
 function Hero() {
   const [idx, setIdx] = useState(0)
@@ -31,9 +59,14 @@ function Hero() {
             i === idx ? 'opacity-100' : 'pointer-events-none opacity-0',
           ].join(' ')}
         >
-          <Placeholder label={s.label} ratio="auto" className="h-full" dark />
+          {/* 배경: 실제 이미지 또는 그라디언트 */}
+          {s.bg ? (
+            <img src={s.bg} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          ) : (
+            <HeroBg slide={s} />
+          )}
           <div className="absolute inset-0 flex items-end">
-            <p className="whitespace-pre-line px-[5%] pb-32 text-5xl font-medium leading-tight text-white drop-shadow md:text-7xl lg:text-8xl xl:text-[8rem]">
+            <p className="relative z-10 whitespace-pre-line px-[5%] pb-32 text-5xl font-medium leading-tight text-white drop-shadow md:text-7xl lg:text-8xl xl:text-[8rem]">
               {s.copy}
             </p>
           </div>
@@ -138,8 +171,18 @@ function OurVideos() {
 function FeaturedBand() {
   return (
     <section className="relative h-[480px] w-full overflow-hidden md:h-[600px]">
-      <Placeholder label="FEATURED BG" ratio="auto" className="h-full" dark />
-      <div className="absolute inset-0 flex flex-col justify-center bg-brand-950/85 px-4 md:px-10 lg:px-40">
+      {/* 배경 그라디언트 */}
+      <div className="absolute inset-0 bg-brand-950">
+        <div className="absolute inset-0" style={{
+          background: 'radial-gradient(ellipse at 20% 60%, var(--brand-700) 0%, transparent 60%)',
+          opacity: 0.4,
+        }} />
+        <div className="absolute inset-0" style={{
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)',
+          backgroundSize: '60px 60px',
+        }} />
+      </div>
+      <div className="absolute inset-0 flex flex-col justify-center px-4 md:px-10 lg:px-40">
         <p className="mb-4 text-sm font-semibold tracking-widest text-white/70">FEATURED VIDEOS</p>
         <h2 className="mb-8 text-4xl font-bold leading-tight text-white md:text-6xl">
           엄선된 AI 강의로
