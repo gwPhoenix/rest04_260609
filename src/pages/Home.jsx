@@ -71,7 +71,7 @@ function Hero() {
           'absolute inset-0 flex items-end transition-opacity duration-1000',
           i === idx ? 'opacity-100' : 'pointer-events-none opacity-0',
         ].join(' ')}>
-          <p className="relative z-10 whitespace-pre-line px-[5%] pb-32 text-5xl font-medium leading-tight text-white drop-shadow md:text-7xl lg:text-8xl xl:text-[8rem]">
+          <p className="relative z-10 whitespace-pre-line px-[5%] pb-32 text-4xl font-medium leading-snug text-white drop-shadow md:text-5xl lg:text-6xl xl:text-7xl">
             {s.copy}
           </p>
         </div>
