@@ -1,96 +1,87 @@
 import { Link } from 'react-router-dom'
 import { company, videoTopics } from '../data/site'
 import Icon from './Icon'
+import Placeholder from './Placeholder'
 
+// rest03 스타일 — 상단 white + 하단 black 2단 구조
 export default function Footer() {
   return (
-    <footer className="mt-auto bg-brand-950 text-slate-400">
-      {/* 상단 */}
-      <div className="mx-auto max-w-container px-4 py-14 md:px-10 lg:px-20">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
-          {/* 브랜드 */}
-          <div className="md:col-span-2">
-            <div className="mb-4 flex items-center gap-1 text-2xl font-extrabold">
-              <span className="text-brand-300">AI</span>
-              <span className="text-white">Learn</span>
+    <footer className="relative">
+      {/* 상단 — 로고 + 소개 (rest03 스타일) */}
+      <div className="mx-auto max-w-container px-4 py-20 md:px-10 lg:px-40">
+        <div className="flex flex-col items-start gap-8 md:flex-row md:items-center">
+          {/* 로고 */}
+          <div className="w-48 shrink-0">
+            <div className="flex items-center gap-1 text-3xl font-extrabold">
+              <span className="text-brand-800">AI</span>
+              <span className="text-brand-950 dark:text-slate-800">Learn</span>
             </div>
-            <p className="mb-4 text-sm leading-7 text-slate-400">
-              {company.description[0]}
-            </p>
-            <div className="flex gap-3">
-              {company.socialLinks.map((s) => (
-                <a
-                  key={s.name}
-                  href={s.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-900 text-sm font-bold text-slate-300 transition hover:bg-brand-800 hover:text-white"
-                  aria-label={s.name}
-                >
-                  {s.name[0]}
-                </a>
-              ))}
-            </div>
+            <p className="mt-1 text-sm font-semibold text-slate-400">{company.nameKo}</p>
           </div>
-
-          {/* 강의 주제 */}
-          <div>
-            <p className="mb-4 text-xs font-bold uppercase tracking-widest text-slate-500">
-              강의 영상
-            </p>
-            <ul className="flex flex-col gap-2">
-              {videoTopics.map((t) => (
-                <li key={t.key}>
-                  <Link
-                    to={`/videos/${t.key}`}
-                    className="text-sm text-slate-400 transition hover:text-white"
-                  >
-                    <Icon name={t.icon} size="text-base" /> {t.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* 연락처 */}
-          <div>
-            <p className="mb-4 text-xs font-bold uppercase tracking-widest text-slate-500">
-              연락처
-            </p>
-            <ul className="flex flex-col gap-2 text-sm text-slate-400">
-              <li>
-                <a href={`mailto:${company.email}`} className="transition hover:text-white">
-                  {company.email}
-                </a>
-              </li>
-              <li>{company.phone}</li>
-              <li className="leading-6">{company.address}</li>
-            </ul>
+          <div className="flex-grow text-base leading-7 text-slate-600 md:text-[1.05rem]">
+            {company.description.map((p, i) => (
+              <p key={i} className="mb-3 last:mb-0">{p}</p>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* 하단 */}
-      <div className="border-t border-brand-900 px-4 py-6 md:px-10 lg:px-20">
-        <div className="mx-auto flex max-w-container flex-col items-center justify-between gap-3 text-sm md:flex-row">
-          <ul className="flex gap-1">
-            {company.footerLinks.map((l) => (
-              <li key={l.label}>
-                <Link
-                  to={l.to}
-                  className={[
-                    'px-3 transition',
-                    l.strong
-                      ? 'font-bold text-slate-300 hover:text-white'
-                      : 'text-slate-500 hover:text-slate-300',
-                  ].join(' ')}
-                >
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <p className="text-slate-600">{company.copyright}</p>
+      {/* 하단 — 다크 영역 (rest03 스타일) */}
+      <div className="bg-black px-4 py-12 md:px-10 lg:px-40">
+        <div className="mx-auto flex max-w-container flex-col gap-10">
+          <div className="flex flex-col justify-between gap-8 md:flex-row">
+            {/* 연락처 */}
+            <div className="flex flex-col gap-3 text-sm">
+              <div className="flex flex-col gap-1 md:flex-row md:gap-8">
+                <div className="w-14 shrink-0 font-bold text-slate-300">이메일</div>
+                <a href={`mailto:${company.email}`} className="font-medium text-slate-400 transition hover:text-white">
+                  {company.email}
+                </a>
+              </div>
+              <div className="flex flex-col gap-1 md:flex-row md:gap-8">
+                <div className="w-14 shrink-0 font-bold text-slate-300">전화</div>
+                <span className="font-medium text-slate-400">{company.phone}</span>
+              </div>
+              <div className="flex flex-col gap-1 md:flex-row md:gap-8">
+                <div className="w-14 shrink-0 font-bold text-slate-300">주소</div>
+                <span className="font-medium text-slate-400">{company.address}</span>
+              </div>
+            </div>
+
+            {/* 강의 주제 링크 */}
+            <div className="w-full md:w-64">
+              <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-500">강의 주제</p>
+              <ul className="grid grid-cols-2 gap-1.5">
+                {videoTopics.map(t => (
+                  <li key={t.key}>
+                    <Link to={`/videos/${t.key}`}
+                      className="flex items-center gap-1.5 text-sm font-medium text-slate-400 transition hover:text-white">
+                      <Icon name={t.icon} size="text-sm" />
+                      {t.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* 정책 + 카피라이트 */}
+          <div className="flex flex-col justify-between gap-4 border-t border-slate-800 pt-4 text-sm md:flex-row md:items-center">
+            <ul className="flex">
+              {company.footerLinks.map(l => (
+                <li key={l.label}>
+                  <Link to={l.to}
+                    className={[
+                      'px-6 first:pl-0',
+                      l.strong ? 'font-black text-white' : 'font-medium text-slate-400 hover:text-white',
+                    ].join(' ')}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="text-slate-600">{company.copyright}</p>
+          </div>
         </div>
       </div>
     </footer>

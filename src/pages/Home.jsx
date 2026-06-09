@@ -1,148 +1,189 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import VideoCard from '../components/VideoCard'
+import Placeholder from '../components/Placeholder'
 import Icon from '../components/Icon'
-import { videoTopics, featuredVideos, stats } from '../data/site'
+import VideoCard from '../components/VideoCard'
+import { videoTopics, featuredVideos, allVideos } from '../data/site'
+
+// ── 히어로 슬라이더 (rest03 스타일) ─────────────────────────
+const slides = [
+  { label: 'HERO 01', copy: 'AI를 배우고,\n미래를 만들다' },
+  { label: 'HERO 02', copy: '누구나 쉽게,\n인공지능의 세계로' },
+]
 
 function Hero() {
-  return (
-    <section className="relative flex min-h-[calc(100vh-5rem)] items-center overflow-hidden bg-brand-950">
-      <div className="pointer-events-none absolute -right-40 -top-40 h-[600px] w-[600px] rounded-full bg-brand-800 opacity-20 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-20 -left-20 h-[400px] w-[400px] rounded-full bg-sky-ai opacity-10 blur-3xl" />
+  const [idx, setIdx] = useState(0)
 
-      <div className="relative mx-auto w-full max-w-container px-6 py-24 md:px-10 lg:px-20">
-        <p className="section-label">AI 온라인 교육 플랫폼</p>
-        <h1 className="mb-6 text-4xl font-extrabold leading-tight text-white md:text-6xl lg:text-7xl">
-          AI를 배우고,<br />
-          <span className="text-sky-ai">미래를 만들다</span>
-        </h1>
-        <p className="mb-10 max-w-xl text-lg leading-8 text-slate-300 md:text-xl">
-          AI 기초부터 딥러닝, AI 리터러시까지 — 전문가가 엄선한 영상 강의로<br className="hidden md:block" />
-          누구나 인공지능을 이해하고 활용할 수 있습니다.
-        </p>
-        <div className="flex flex-wrap gap-4">
-          <Link to="/videos/ai-basics" className="btn-gold px-8 py-4 text-lg">
-            강의 시작하기 →
-          </Link>
-          <Link to="/curriculum" className="inline-flex items-center gap-2 rounded-lg border-2 border-white/50 px-8 py-4 text-lg font-bold text-white transition hover:bg-white/10">
-            커리큘럼 보기
-          </Link>
-        </div>
-        <div className="mt-12 flex flex-wrap gap-2">
-          {videoTopics.map(t => (
-            <Link key={t.key} to={`/videos/${t.key}`}
-              className="flex items-center gap-1.5 rounded-full border border-brand-700 px-4 py-1.5 text-sm font-medium text-slate-300 transition hover:border-sky-ai hover:text-sky-ai"
-            >
-              <Icon name={t.icon} size="text-base" />
-              {t.label}
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
+  useEffect(() => {
+    const t = setInterval(() => setIdx(i => (i + 1) % slides.length), 5000)
+    return () => clearInterval(t)
+  }, [])
 
-function StatsBand() {
+  const go = dir => setIdx(i => (i + dir + slides.length) % slides.length)
+
   return (
-    <section className="bg-brand-800 py-12">
-      <div className="mx-auto grid max-w-container grid-cols-2 gap-6 px-6 text-center md:grid-cols-4 md:px-10 lg:px-20">
-        {stats.map(s => (
-          <div key={s.label}>
-            <p className="text-4xl font-extrabold text-white md:text-5xl">{s.value}</p>
-            <p className="mt-1 text-sm font-semibold text-brand-200 md:text-base">{s.label}</p>
+    <section className="relative h-[calc(100vh-5rem)] min-h-[520px] w-full overflow-hidden bg-brand-950">
+      {slides.map((s, i) => (
+        <div
+          key={i}
+          className={[
+            'absolute inset-0 transition-opacity duration-1000',
+            i === idx ? 'opacity-100' : 'pointer-events-none opacity-0',
+          ].join(' ')}
+        >
+          <Placeholder label={s.label} ratio="auto" className="h-full" dark />
+          <div className="absolute inset-0 flex items-end">
+            <p className="whitespace-pre-line px-[5%] pb-32 text-5xl font-medium leading-tight text-white drop-shadow md:text-7xl lg:text-8xl xl:text-[8rem]">
+              {s.copy}
+            </p>
           </div>
+        </div>
+      ))}
+
+      {/* 좌우 화살표 */}
+      <button type="button" aria-label="이전 슬라이드" onClick={() => go(-1)}
+        className="absolute bottom-10 left-[5%] z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/60 text-white transition hover:bg-white/20">
+        ‹
+      </button>
+      <button type="button" aria-label="다음 슬라이드" onClick={() => go(1)}
+        className="absolute bottom-10 left-[calc(5%+52px)] z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/60 text-white transition hover:bg-white/20">
+        ›
+      </button>
+
+      {/* 우측 CTA 버튼 */}
+      <div className="absolute bottom-10 right-[5%] z-10 hidden gap-3 md:flex">
+        <Link to="/videos/ai-basics"
+          className="flex items-center gap-3 rounded-full bg-brand-800 px-6 py-3.5 font-bold text-white transition hover:brightness-125">
+          강의 시작하기 <span>→</span>
+        </Link>
+        <Link to="/curriculum"
+          className="flex items-center gap-3 rounded-full bg-white/20 px-6 py-3.5 font-bold text-white backdrop-blur transition hover:bg-white/30">
+          커리큘럼 <span>→</span>
+        </Link>
+      </div>
+
+      {/* 인디케이터 */}
+      <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+        {slides.map((_, i) => (
+          <button key={i} type="button" aria-label={`슬라이드 ${i + 1}`} onClick={() => setIdx(i)}
+            className={['h-1.5 rounded-full transition-all', i === idx ? 'w-8 bg-white' : 'w-2 bg-white/50'].join(' ')} />
         ))}
       </div>
     </section>
   )
 }
 
-function TopicsSection() {
+// ── 주제 링크 (rest03 IntroLinks 스타일) ─────────────────────
+function TopicLinks() {
   return (
-    <section className="py-20 md:py-28">
-      <div className="mx-auto max-w-container px-6 md:px-10 lg:px-20">
-        <p className="section-label">TOPICS</p>
-        <h2 className="section-title mb-4">6가지 주제로 배우는 AI</h2>
-        <p className="mb-12 text-slate-500 dark:text-slate-400">
-          입문부터 고급까지, 원하는 주제를 선택하여 자신만의 학습 경로를 만들어보세요.
-        </p>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {videoTopics.map(t => (
-            <Link key={t.key} to={`/videos/${t.key}`} className="card group flex gap-5 p-6 transition">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-brand-50 dark:bg-brand-900">
-                <Icon name={t.icon} size="text-3xl" className="text-brand-800 dark:text-brand-300" />
-              </div>
-              <div className="min-w-0">
-                <p className="mb-1 font-extrabold text-slate-900 dark:text-white">{t.label}</p>
-                <p className="text-sm leading-6 text-slate-500 dark:text-slate-400 line-clamp-2">{t.desc}</p>
-                <p className="mt-2 text-xs font-bold text-sky-ai">영상 {t.count}개 →</p>
-              </div>
+    <section className="py-24 text-center md:py-32">
+      <p className="mx-auto mb-12 max-w-2xl px-6 text-2xl font-bold leading-snug text-slate-800 dark:text-slate-100 md:text-3xl">
+        AI 기초부터 딥러닝까지,
+        <br className="hidden md:block" /> 누구나 쉽게 배울 수 있습니다.
+      </p>
+      <ul className="flex flex-wrap justify-center gap-4 px-4">
+        {videoTopics.map(t => (
+          <li key={t.key}>
+            <Link to={`/videos/${t.key}`}
+              className="relative inline-flex items-center gap-2 rounded-full bg-neutral-100 py-4 pl-5 pr-12 font-bold transition hover:bg-neutral-200 dark:bg-dark-card dark:text-slate-100 dark:hover:bg-dark-border">
+              <Icon name={t.icon} size="text-base" className="text-brand-800 dark:text-brand-300" />
+              {t.label}
+              <span className="absolute right-5 text-neutral-400">→</span>
             </Link>
-          ))}
-        </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+// ── 강의 주제 카드 (rest03 OurBusiness 스타일) ───────────────
+function OurVideos() {
+  return (
+    <section className="py-24 md:py-32">
+      <div className="mx-auto max-w-container px-4 md:px-10 lg:px-40">
+        <h2 className="mb-12 text-4xl font-bold leading-tight text-brand-800 dark:text-brand-300 md:text-6xl">
+          AI 강의 영상
+          <br />
+          주제별로 배우세요
+        </h2>
+      </div>
+
+      {/* 가로 스크롤 카드 (rest03 business cards 스타일) */}
+      <div className="flex gap-6 overflow-x-auto px-4 pb-4 md:px-10 lg:px-40">
+        {videoTopics.map(t => (
+          <Link key={t.key} to={`/videos/${t.key}`}
+            className="group relative h-[366px] w-64 shrink-0 overflow-hidden rounded-xl bg-brand-950 dark:bg-dark-card">
+            {/* 배경 아이콘 */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Icon name={t.icon} size="text-[8rem]" className="text-brand-800 opacity-20 dark:text-brand-700" />
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
+              <Icon name={t.icon} size="text-2xl" className="mb-3 text-brand-300" />
+              <p className="mb-3 text-2xl font-bold">{t.label}</p>
+              <p className="text-xs font-semibold text-brand-300">{t.count}개 강의</p>
+              <p className="mt-2 text-sm leading-6 text-white/70 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                {t.desc}
+              </p>
+            </div>
+          </Link>
+        ))}
       </div>
     </section>
   )
 }
 
-function FeaturedVideos() {
+// ── 추천 영상 배너 (rest03 SustainabilityBand 스타일) ────────
+function FeaturedBand() {
   return (
-    <section className="bg-slate-50 py-20 dark:bg-dark-surface md:py-28">
-      <div className="mx-auto max-w-container px-6 md:px-10 lg:px-20">
-        <div className="mb-12 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <p className="section-label">FEATURED</p>
-            <h2 className="section-title">추천 강의 영상</h2>
-          </div>
-          <Link to="/videos/ai-basics" className="shrink-0 text-sm font-bold text-brand-800 transition hover:text-brand-600 dark:text-brand-300">
-            전체 영상 보기 →
+    <section className="relative h-[480px] w-full overflow-hidden md:h-[600px]">
+      <Placeholder label="FEATURED BG" ratio="auto" className="h-full" dark />
+      <div className="absolute inset-0 flex flex-col justify-center bg-brand-950/85 px-4 md:px-10 lg:px-40">
+        <p className="mb-4 text-sm font-semibold tracking-widest text-white/70">FEATURED VIDEOS</p>
+        <h2 className="mb-8 text-4xl font-bold leading-tight text-white md:text-6xl">
+          엄선된 AI 강의로
+          <br />
+          오늘 바로 시작하세요
+        </h2>
+        <div>
+          <Link to="/videos/ai-basics"
+            className="inline-flex items-center gap-3 rounded-full bg-white/90 px-6 py-3.5 font-bold text-brand-800 transition hover:bg-white">
+            강의 바로가기 <span>→</span>
           </Link>
         </div>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredVideos.map(v => <VideoCard key={v.id} video={v} />)}
-        </div>
       </div>
     </section>
   )
 }
 
-const features = [
-  { icon: 'play_circle',  title: '고품질 영상 강의',    desc: '전문가가 제작한 체계적인 강의를 유튜브 플랫폼으로 언제 어디서나 시청하세요.' },
-  { icon: 'school',       title: '단계별 커리큘럼',      desc: '입문부터 고급까지 4단계로 구성된 학습 경로로 효율적으로 실력을 쌓으세요.' },
-  { icon: 'lock_open',    title: '무료 공개 콘텐츠',     desc: '선별된 AI 교육 콘텐츠를 비용 없이 바로 학습할 수 있습니다.' },
-  { icon: 'smartphone',   title: '모바일 최적화',         desc: '스마트폰·태블릿·PC 어디서든 최적화된 화면으로 학습 경험을 제공합니다.' },
-]
-
-function WhySection() {
+// ── 최신 강의 목록 (rest03 MoreToDiscover 스타일) ────────────
+function LatestVideos() {
+  const latest = allVideos.slice(0, 4)
   return (
-    <section className="py-20 md:py-28">
-      <div className="mx-auto max-w-container px-6 md:px-10 lg:px-20">
-        <p className="section-label">WHY AILEARN</p>
-        <h2 className="section-title mb-12">왜 AILearn인가요?</h2>
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map(f => (
-            <div key={f.title} className="card p-6">
-              <Icon name={f.icon} size="text-4xl" className="mb-4 text-brand-800 dark:text-brand-300" />
-              <h3 className="mb-2 font-extrabold text-slate-900 dark:text-white">{f.title}</h3>
-              <p className="text-sm leading-7 text-slate-500 dark:text-slate-400">{f.desc}</p>
-            </div>
+    <section className="py-24 md:py-32">
+      <div className="mx-auto flex max-w-container flex-col px-4 md:px-10 lg:px-40">
+        <div className="mb-12 flex flex-col items-start justify-between gap-6 border-b-2 border-slate-300 pb-10 dark:border-dark-border md:flex-row md:items-center">
+          <p className="text-4xl font-bold text-brand-800 dark:text-brand-300 md:text-6xl">
+            최신 강의 영상
+          </p>
+          <Link to="/videos/ai-basics"
+            className="relative inline-flex items-center gap-3 rounded-full bg-neutral-100 py-4 pl-6 pr-12 font-bold transition hover:bg-neutral-200 dark:bg-dark-card dark:text-slate-100 dark:hover:bg-dark-border">
+            전체보기 <span className="absolute right-5 text-neutral-400">→</span>
+          </Link>
+        </div>
+
+        <ul className="flex flex-col divide-y divide-slate-200 dark:divide-dark-border">
+          {latest.map(v => (
+            <li key={v.id}>
+              <Link to={`/videos/${v.topic}`}
+                className="flex flex-col justify-between gap-1 py-5 transition hover:text-brand-800 dark:hover:text-brand-300 md:flex-row md:items-center">
+                <span className="text-lg font-semibold text-slate-800 dark:text-slate-100 md:text-xl">{v.title}</span>
+                <span className="text-sm text-slate-500 dark:text-slate-400">{v.date}</span>
+              </Link>
+            </li>
           ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function CtaBanner() {
-  return (
-    <section className="relative overflow-hidden bg-brand-900 py-20">
-      <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 -translate-y-1/2 translate-x-1/2 rounded-full bg-sky-ai opacity-20 blur-3xl" />
-      <div className="relative mx-auto max-w-container px-6 text-center md:px-10">
-        <h2 className="mb-4 text-3xl font-extrabold text-white md:text-5xl">지금 바로 AI를 시작하세요</h2>
-        <p className="mb-8 text-lg text-brand-200">48개 이상의 강의가 무료로 제공됩니다.</p>
-        <Link to="/videos/ai-basics" className="btn-gold px-10 py-4 text-lg">
-          무료 강의 시작하기 →
-        </Link>
+        </ul>
       </div>
     </section>
   )
@@ -152,11 +193,10 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <StatsBand />
-      <TopicsSection />
-      <FeaturedVideos />
-      <WhySection />
-      <CtaBanner />
+      <TopicLinks />
+      <OurVideos />
+      <FeaturedBand />
+      <LatestVideos />
     </>
   )
 }

@@ -32,7 +32,7 @@ export default {
         sans: ['Pretendard', 'system-ui', '-apple-system', 'sans-serif'],
       },
       maxWidth: {
-        container: '1400px',
+        container: '1600px',
       },
     },
   },
