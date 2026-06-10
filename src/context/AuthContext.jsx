@@ -9,17 +9,20 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    const hash = window.location.hash
+    const isOAuthCallback = hash.includes('access_token') || hash.includes('error=')
+
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
       setLoading(false)
+      if (isOAuthCallback) {
+        const base = window.location.origin + window.location.pathname.replace(/\/$/, '')
+        window.location.replace(base + '/#/')
+      }
     })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null)
-      // OAuth 콜백 후 URL 정리
-      if (event === 'SIGNED_IN' && window.location.hash.includes('access_token')) {
-        window.location.replace(window.location.origin + window.location.pathname + '#/')
-      }
     })
 
     return () => subscription.unsubscribe()
