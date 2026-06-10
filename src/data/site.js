@@ -81,6 +81,13 @@ export const videoTopics = [
   },
 ]
 
+// 게시판 유형
+export const boardTypes = [
+  { key: 'notice', label: '공지사항', icon: 'campaign' },
+  { key: 'qna',    label: 'Q&A',    icon: 'help' },
+  { key: 'free',   label: '자유게시판', icon: 'forum' },
+]
+
 // 상단 GNB
 export const nav = [
   { label: '홈', to: '/' },
@@ -90,6 +97,11 @@ export const nav = [
     children: videoTopics.map(t => ({ label: t.label, to: `/videos/${t.key}` })),
   },
   { label: '커리큘럼', to: '/curriculum' },
+  {
+    label: '커뮤니티',
+    to: '/board/free',
+    boardChildren: boardTypes.map(t => ({ label: t.label, to: `/board/${t.key}`, icon: t.icon })),
+  },
   { label: '회사 소개', to: '/about' },
   { label: '문의하기', to: '/contact' },
 ]
