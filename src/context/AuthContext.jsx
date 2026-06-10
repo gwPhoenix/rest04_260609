@@ -50,7 +50,10 @@ export function AuthProvider({ children }) {
   const signInWithKakao = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'kakao',
-      options: { redirectTo: window.location.origin + window.location.pathname },
+      options: {
+        redirectTo: window.location.origin + window.location.pathname,
+        scopes: 'profile_nickname',
+      },
     })
     if (error) throw error
   }
