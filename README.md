@@ -1,4 +1,4 @@
-# rest03 — 건설사 회사 사이트 템플릿
+# rest04 — 건설사 회사 사이트 템플릿
 
 [chinhung.co.kr](https://www.chinhung.co.kr/) 의 디자인·구성을 참고하여 만든 **React 기반 건설사 회사 홈페이지 템플릿**입니다.
 모든 이미지는 **플레이스홀더**로 표기되어 있어, 실제 이미지로 교체하기만 하면 바로 사용할 수 있습니다.
@@ -48,7 +48,7 @@ src/
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173/rest03/
+npm run dev      # http://localhost:5173/rest04_260609/
 npm run build    # dist/
 npm run preview
 ```
@@ -56,9 +56,9 @@ npm run preview
 ## 배포
 
 `main` 브랜치 push 시 GitHub Actions(`.github/workflows/deploy.yml`)가 자동으로 빌드 후
-GitHub Pages 에 배포합니다. 배포 URL: `https://aebonlee.github.io/rest03/`
+GitHub Pages 에 배포합니다. 배포 URL: `https://gwphoenix.github.io/rest04_260609/`
 
-> Vite `base` 가 `/rest03/` 로 설정되어 있습니다. 다른 경로/도메인에 배포하려면 `vite.config.js` 의 `base` 를 수정하세요.
+> Vite `base` 가 `/rest04_260609/` 로 설정되어 있습니다. 다른 경로/도메인에 배포하려면 `vite.config.js` 의 `base` 를 수정하세요.
 
 ## 커스터마이징
 
